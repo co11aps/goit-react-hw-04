@@ -7,9 +7,10 @@ const App = () => {
   useEffect(() => {
     async function fetchArticles() {
       const response = await axios.get(
-        "<https://hn.algolia.com/?dateRange=all&page=0&prefix=true&query=react&sort=byPopularity&type=story>"
+        "<http://hn.algolia.com/api/v1/search?query=react>"
       );
       setArticles(response.data.hits);
+      console.log(response.data);
     }
 
     fetchArticles();
