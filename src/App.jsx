@@ -7,11 +7,11 @@ const App = () => {
   useEffect(() => {
     async function fetchArticles() {
       const response = await axios.get(
-        "<http://hn.algolia.com/api/v1/search?tags=front_page>"
+        "<https://hn.algolia.com/api/v1/search?query=react>"
       );
       setArticles(response.data.hits);
-      console.log(response.data);
     }
+
     fetchArticles();
   }, []);
 
@@ -19,7 +19,17 @@ const App = () => {
     <div>
       <h1>Latest articles</h1>
 
-      <ul></ul>
+      {articles.length > 0 && (
+        <ul>
+          {articles.map(({ objectID, url, title }) => (
+            <li key={objectID}>
+              <a href={url} target="_blank" rel="noreferrer noopener">
+                {title}
+              </a>
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 };
