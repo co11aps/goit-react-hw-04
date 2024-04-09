@@ -1,9 +1,5 @@
 .imgList {
     display: flex;
     flex-wrap: wrap;
-    gap: 4px 8px;
-}
-
-.imgList li {
-    list-style: none;
+    gap: 8px 8px;
 }

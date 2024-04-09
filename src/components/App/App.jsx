@@ -7,6 +7,7 @@ import ErrorMessage from "../ErrorMessage/ErrorMessage";
 import LoadMoreBtn from "../LoadMoreBtn/LoadMoreBtn";
 import Modal from "react-modal";
 import ImageModal from "../ImageModal/ImageModal";
+import css from "./App.module.css";
 
 Modal.setAppElement("#root");
 
@@ -78,7 +79,7 @@ const App = () => {
   }
 
   return (
-    <>
+    <div className={css.wrapper}>
       <SearchBar onSearch={loadImages} />
       {images.length > 0 && (
         <ImageGallery images={images} handleImgClick={handleOpenModal} />
@@ -92,7 +93,7 @@ const App = () => {
       {nothingFoundError && <p>Nothing found. Try something else</p>}
       {loader && <Loader />}
       {isMoreBtn && <LoadMoreBtn onLoadMore={loadMoreImages} />}
-    </>
+    </div>
   );
 };
 

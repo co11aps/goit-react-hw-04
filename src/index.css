@@ -1,0 +1,16 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #cdcdcd;
+}
+
+img {
+    display: block;
+}
+
+li {
+    list-style: none;
+}
+
+button {
+    cursor: pointer;
+}
