@@ -6,7 +6,7 @@ const fetchImages = async (query, page = 1) => {
   const params = {
     query,
     page,
-    per_page: 8,
+    per_page: 12,
     orientation: "landscape",
     client_id: import.meta.env.VITE_ACCESS_KEY,
   };

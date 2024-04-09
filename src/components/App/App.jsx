@@ -8,18 +8,6 @@ import LoadMoreBtn from "../LoadMoreBtn/LoadMoreBtn";
 import Modal from "react-modal";
 import ImageModal from "../ImageModal/ImageModal";
 
-// const customStyles = {
-//   content: {
-//     position: "absolute",
-//     top: "50%",
-//     left: "50%",
-//     right: "auto",
-//     bottom: "auto",
-//     marginRight: "-50%",
-//     transform: "translate(-50%, -50%)",
-//   },
-// };
-
 Modal.setAppElement("#root");
 
 const App = () => {
@@ -40,12 +28,10 @@ const App = () => {
     setImages([]);
     setNothingFoundError(false);
     setPage(1);
-    console.log("page reset");
   }
 
   useEffect(() => {
     setIsMoreBtn(totalPages && totalPages > page);
-    console.log("tp:", totalPages, "page:", page);
   }, [totalPages, page]);
 
   async function loadImages(query) {
@@ -71,7 +57,7 @@ const App = () => {
     try {
       setPage((prevPage) => prevPage + 1);
       const newImgs = await fetchImages(searchQuery, page + 1);
-      setImages((prevImages) => [...prevImages, ...newImgs.results]);
+      setImages((prevImgs) => [...prevImgs, ...newImgs.results]);
     } catch (error) {
       setError(true);
       console.log(error);
@@ -80,11 +66,6 @@ const App = () => {
 
   function openModal() {
     setIsOpen(true);
-  }
-
-  function afterOpenModal() {
-    // references are now sync'd and can be accessed.
-    // subtitle.style.color = "#f00";
   }
 
   function closeModal() {
@@ -103,11 +84,8 @@ const App = () => {
         <ImageGallery images={images} handleImgClick={handleOpenModal} />
       )}
       <ImageModal
-        onRequestOpen={openModal}
         isOpen={modalIsOpen}
-        onAfterOpen={afterOpenModal}
         onRequestClose={closeModal}
-        contentLabel="Example Modal"
         content={modalContent}
       />
       {error && <ErrorMessage />}

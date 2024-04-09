@@ -1,7 +1,7 @@
 import Modal from "react-modal";
+import css from "./ImageModal.module.css";
 
 const ImageModal = ({
-  onRequestOpen,
   isOpen,
   onRequestClose,
   content: { src, alt_description, likes, description, downloadSrc },
@@ -16,14 +16,16 @@ const ImageModal = ({
         contentLabel="onRequestClose Example"
         onRequestClose={() => onRequestClose()}
         shouldCloseOnOverlayClick={true}
-        className="Modal"
-        overlayClassName="Overlay"
+        className={css.Modal}
+        overlayClassName={css.Overlay}
       >
         <img src={src} alt={alt_description} />
-        <p>{likes}</p>
         <p>{description}</p>
+        <p>{likes}</p>
         <a href={downloadSrc}>Download full size image</a>
-        <button onClick={() => onRequestClose()}>Close Modal</button>
+        <button className={css.close} onClick={() => onRequestClose()}>
+          x
+        </button>
       </Modal>
     </div>
   );
