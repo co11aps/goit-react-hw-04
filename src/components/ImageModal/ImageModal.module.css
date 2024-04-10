@@ -1,4 +1,6 @@
 .Modal {
+    border: 1px solid aliceblue;
+    border-radius: 4px;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -20,8 +22,38 @@
 }
 
 .close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     position: absolute;
     top: 10px;
     right: 10px;
     border-radius: 50%;
+    height: 24px;
+    width: 24px;
+    border: none;
+    background-color: rgba(150, 150, 150, 0.7);
 }
+
+.bottom {
+    color: aliceblue;
+    background-color: #03053b;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 32px;
+}
+
+.descr {
+    max-width: 900px;
+}
+
+.likes {
+    font-size: 16px;
+    color: red;
+    text-align: center;
+}
+
+/* .closeIcon {
+    size: 36px;
+} */

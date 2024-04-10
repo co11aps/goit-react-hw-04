@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { fetchImages } from "../API/API";
 import ImageGallery from "../ImageGallery/ImageGallery";
 import Loader from "../Loader/Loader";
@@ -17,11 +17,11 @@ const App = () => {
   const [error, setError] = useState(false);
   const [nothingFoundError, setNothingFoundError] = useState(false);
   const [page, setPage] = useState(1);
-  const [searchQuery, setSearchQ] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
   const [isMoreBtn, setIsMoreBtn] = useState(false);
   const [modalIsOpen, setIsOpen] = useState(false);
   const [modalContent, setModalContent] = useState({});
-  const [totalPages, settotalPages] = useState(1);
+  const [totalPages, setTotalPages] = useState(null);
 
   function resetPage() {
     setError(false);
@@ -29,22 +29,24 @@ const App = () => {
     setImages([]);
     setNothingFoundError(false);
     setPage(1);
+    setTotalPages(null);
   }
 
   useEffect(() => {
-    setIsMoreBtn(totalPages && totalPages > page);
+    setIsMoreBtn(totalPages && totalPages !== page);
   }, [totalPages, page]);
 
   async function loadImages(query) {
     try {
       resetPage();
-      setSearchQ(query);
+      setSearchQuery(query);
       const imgs = await fetchImages(query);
       if (imgs.results.length === 0) {
         setNothingFoundError(true);
+        setTotalPages(null);
         return;
       }
-      settotalPages(imgs.total_pages);
+      setTotalPages(imgs.total_pages);
       setImages(imgs.results);
     } catch (error) {
       setError(true);
@@ -71,6 +73,7 @@ const App = () => {
 
   function closeModal() {
     setIsOpen(false);
+    setModalContent({});
   }
 
   function handleOpenModal(content) {
@@ -90,7 +93,9 @@ const App = () => {
         content={modalContent}
       />
       {error && <ErrorMessage />}
-      {nothingFoundError && <p>Nothing found. Try something else</p>}
+      {nothingFoundError && (
+        <p className={css.text}>Nothing found. Try something else</p>
+      )}
       {loader && <Loader />}
       {isMoreBtn && <LoadMoreBtn onLoadMore={loadMoreImages} />}
     </div>

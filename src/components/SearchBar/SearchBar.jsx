@@ -1,5 +1,6 @@
 import toast, { Toaster } from "react-hot-toast";
 import css from "./SearchBar.module.css";
+import { FaSearch } from "react-icons/fa";
 
 const SearchBar = ({ onSearch }) => {
   const handleSubmit = (evt) => {
@@ -16,7 +17,7 @@ const SearchBar = ({ onSearch }) => {
 
   return (
     <header className={css.header}>
-      <form onSubmit={handleSubmit}>
+      <form className={css.form} onSubmit={handleSubmit}>
         <input
           className={css.input}
           type="text"
@@ -26,7 +27,7 @@ const SearchBar = ({ onSearch }) => {
           placeholder="Search images and photos"
         />
         <button className={css.btn} type="submit">
-          Search
+          <FaSearch />
         </button>
       </form>
       <Toaster />

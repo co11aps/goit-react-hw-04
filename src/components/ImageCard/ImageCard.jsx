@@ -8,7 +8,6 @@ const ImageCard = ({
       alt_description,
       likes,
       description,
-      downloadSrc: links.download,
     };
 
     handleImgClick(content);
