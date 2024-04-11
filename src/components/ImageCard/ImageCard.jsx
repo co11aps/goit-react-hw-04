@@ -1,5 +1,5 @@
 const ImageCard = ({
-  data: { urls, alt_description, likes, description, links },
+  data: { urls, alt_description, likes, description },
   handleImgClick,
 }) => {
   function handleClick() {
