@@ -23,49 +23,46 @@ const App = () => {
   const [modalContent, setModalContent] = useState({});
   const [totalPages, setTotalPages] = useState(null);
 
-  function resetPage() {
-    setError(false);
-    setLoader(true);
+  const onSubmit = (searchQuery) => {
     setImages([]);
-    setNothingFoundError(false);
     setPage(1);
     setTotalPages(null);
-  }
+    setNothingFoundError(false);
+    setSearchQuery(searchQuery);
+  };
 
   useEffect(() => {
     setIsMoreBtn(totalPages && totalPages !== page);
   }, [totalPages, page]);
 
-  async function loadImages(query) {
-    try {
-      resetPage();
-      setSearchQuery(query);
-      const imgs = await fetchImages(query);
-      if (imgs.results.length === 0) {
-        setNothingFoundError(true);
-        setTotalPages(null);
-        return;
-      }
-      setTotalPages(imgs.total_pages);
-      setImages(imgs.results);
-    } catch (error) {
-      setError(true);
-      console.log(error.message);
-    } finally {
-      setLoader(false);
-    }
-  }
+  useEffect(() => {
+    if (!searchQuery) return;
 
-  async function loadMoreImages() {
-    try {
-      setPage((prevPage) => prevPage + 1);
-      const newImgs = await fetchImages(searchQuery, page + 1);
-      setImages((prevImgs) => [...prevImgs, ...newImgs.results]);
-    } catch (error) {
-      setError(true);
-      console.log(error);
+    async function loadImages() {
+      try {
+        setError(false);
+        setLoader(true);
+        const imgs = await fetchImages(searchQuery, page);
+        if (imgs.results.length === 0) {
+          setNothingFoundError(true);
+          return;
+        }
+        setTotalPages(imgs.total_pages);
+        setImages((prevImgs) => [...prevImgs, ...imgs.results]);
+      } catch (error) {
+        setError(true);
+        console.log(error.message);
+      } finally {
+        setLoader(false);
+      }
     }
-  }
+
+    loadImages();
+  }, [searchQuery, page]);
+
+  const loadMoreImages = () => {
+    setPage((prevPage) => prevPage + 1);
+  };
 
   function openModal() {
     setIsOpen(true);
@@ -83,7 +80,7 @@ const App = () => {
 
   return (
     <div className={css.wrapper}>
-      <SearchBar onSearch={loadImages} />
+      <SearchBar onSearch={onSubmit} />
       {images.length > 0 && (
         <ImageGallery images={images} handleImgClick={handleOpenModal} />
       )}
