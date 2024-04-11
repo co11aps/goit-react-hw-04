@@ -66,11 +66,13 @@ const App = () => {
 
   function openModal() {
     setIsOpen(true);
+    document.body.style.overflow = "hidden";
   }
 
   function closeModal() {
     setIsOpen(false);
     setModalContent({});
+    document.body.style.overflow = "";
   }
 
   function handleOpenModal(content) {
