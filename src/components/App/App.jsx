@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { fetchImages } from "../API/API";
 import ImageGallery from "../ImageGallery/ImageGallery";
 import Loader from "../Loader/Loader";
@@ -22,6 +22,7 @@ const App = () => {
   const [modalIsOpen, setIsOpen] = useState(false);
   const [modalContent, setModalContent] = useState({});
   const [totalPages, setTotalPages] = useState(null);
+  const loadMoreBtnRef = useRef(null);
 
   const onSubmit = (searchQuery) => {
     setImages([]);
@@ -34,6 +35,12 @@ const App = () => {
   useEffect(() => {
     setIsMoreBtn(totalPages && totalPages !== page);
   }, [totalPages, page]);
+
+  useEffect(() => {
+    if (loadMoreBtnRef.current) {
+      loadMoreBtnRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [images]);
 
   useEffect(() => {
     if (!searchQuery) return;
@@ -97,6 +104,7 @@ const App = () => {
       )}
       {loader && <Loader />}
       {isMoreBtn && <LoadMoreBtn onLoadMore={loadMoreImages} />}
+      <div ref={loadMoreBtnRef} />
     </div>
   );
 };
